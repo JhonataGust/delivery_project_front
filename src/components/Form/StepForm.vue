@@ -18,19 +18,26 @@
     </div>
     <div class="form" style="margin:0px 120px;padding: 50px">
         <label>Nome Completo</label>
-        <input type="text" placeholder="Ex: João Carlos"/><br/>
+        <input type="text" placeholder="Ex: João Carlos" v-model="full_name"/><br/>
         <label>Email</label>
-        <input type="text" placeholder="Ex: João Carlos"/><br/>
+        <input type="text" placeholder="Ex: test@gmail.com" v-model="email"/><br/>
         <label>Numero do Celular</label>
-        <input type="text" placeholder="Ex: João Carlos"/><br/>
+        <input type="text" placeholder="Ex: 00 0000-0000" v-model="phone"/><br/>
         <label>Crie sua Senha</label>
-        <input type="text" placeholder="Ex: João Carlos"/><br/>
+        <input type="password" placeholder="Senha" v-model="password"/><br/>
         <label>Confirme sua Senha</label>
-        <input type="text" placeholder="Ex: João Carlos"/><br/>
+        <input type="password" placeholder="Confirme sua senha" v-model="confirm_password"/><br/>
+        <p 
+        style="color:#E65F5C;
+        text-align: center;
+        margin: 5px 0px;"
+        v-if="not_match"
+        >
+        Senhas não coincidem</p>
         <v-btn
         style="width:100%;color:aliceblue"
         color="#E65F5C"
-        @click="step++"
+        @click="next_step"
         >
             Proximo
         </v-btn>
@@ -62,14 +69,15 @@
           dense
         ></v-combobox>
         <label>Rua</label>
-        <input type="text" placeholder="Ex: Rua São Carlos"/><br/>
+        <input type="text" placeholder="Ex: Rua São Carlos" v-model="street"/><br/>
         <label>Bairro</label>
-        <input type="text" placeholder="Ex: Villa Almeida"/><br/>
+        <input type="text" placeholder="Ex: Villa Almeida" v-model="district"/><br/>
         <label>Numero da Residencia</label>
-        <input type="number" placeholder="Ex: 198"/><br/>
+        <input type="text" placeholder="Ex: 198" v-model="number"/><br/>
         <v-btn
         style="width:100%;color:aliceblue"
         color="#E65F5C"
+        @click="sendParams"
         >
             Concluir
         </v-btn>
@@ -156,12 +164,43 @@ export default {
             email:'',
             phone:'',
             password:'',
-            confirm_password:''
+            district:'',
+            street:'',
+            number:'',
+            confirm_password:'',
+            not_match: true
         }
     },
     methods:{
+        next_step(){
+            if(this.not_match == true){
+                this.$moshaToast('Campos vazios não são aceitos',
+                {
+                position: 'top-center',
+                type: 'danger',
+                timeout: 1500,
+                })
+            }else{
+                this.step++;
+            }
+        },
         sendParams(){
-            this.$emit("emit-result",50)
+            let params = {
+                address:{
+                    city: this.city_result,
+                    street: this.street,
+                    number: this.number,
+                    district: this.district
+                },
+                user:{
+                    full_name: this.full_name,
+                    email: this.email,
+                    phone: this.phone,
+                    password: this.password,
+                    level_account: 0
+                }
+            }
+            this.$emit("emit-params_register", params)
         },
         getCities(term){
             this.$axios.get(`${this.$HOST}/v1/cities?term=${term}`).then((response) => {
@@ -173,6 +212,13 @@ export default {
     watch: {
         city_result: function(value){
             this.getCities(value)
+        },
+        confirm_password: function(value){
+            if(this.password != value){
+                this.not_match =  true;
+            }else{
+                this.not_match = false;
+            }
         }
     }
 }

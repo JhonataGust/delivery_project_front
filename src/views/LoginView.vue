@@ -7,7 +7,7 @@
        >
         {{register == false ? 'Ainda não possui conta' : 'Já possui uma conta?'}}
        </v-btn>
-       <StepForm @emit-result="result_value" page="5" v-if="register"/>
+       <StepForm @emit-params_register="register_account" page="5" v-if="register"/>
        <LoginForm  v-if="!register" @emit-login_payload="save_login"/>
        <div class="infos">
         <h1 style="text-align:center;margin:20px 0px;">Quem somos</h1>
@@ -91,9 +91,38 @@ components: {
         }
     },
     methods:{
-        result_value(fromStepForm) {
-        console.log('olaa' + fromStepForm);
-       this.value = fromStepForm;
+    register_account(payload){
+        this.register_save(payload)
+    },
+    register_save(payload){
+        axios
+        .post(`${this.$HOST}/v1/users`,{
+           user: payload.user,
+           address: payload.address
+        })
+        .catch(()=>{
+            this.$moshaToast('Campos Vazios não Permitidos',
+            {
+            position: 'top-center',
+            type: 'danger',
+            timeout: 1500,
+            })
+        })
+        .then((response)=>{
+            console.log(response)
+            if (typeof response != 'undefined'){
+                sessionStorage.setItem('token_user',response.data.token)
+                this.$moshaToast('Conta Criada com Sucesso!',
+            {
+                position: 'top-center',
+                type: 'success',
+                timeout: 1500,
+            })
+                setTimeout(()=>{
+                    this.$router.go()
+                },1500)
+            }
+        })
     },
     save_login(payload){
         axios

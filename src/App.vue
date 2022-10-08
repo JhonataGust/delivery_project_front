@@ -2,6 +2,7 @@
   <v-app>
     <v-main>
       <router-view/>
+      <NavBar v-if="logged"/>
     </v-main>
   </v-app>
 </template>
@@ -17,30 +18,39 @@
 }
 </style>
 <script>
+import NavBar from './components/Navbar/NavBar.vue'
 export default {
-  name: 'App',
-  methods: {
-    sessionRedirect(){
-      console.log(sessionStorage.getItem('token_user'))
-      this.$axios.defaults.headers.common = {'Authorization': `bearer ${String(sessionStorage.getItem('token_user'))}`}
-      this.$axios
-      .get(`${this.$HOST}/v1/users`)
-      .catch((error)=>{
-        if(error){
-          this.$router.push('/login')
-        }else{
-          this.$router.push('/home')
+    name: "App",
+    components: { NavBar },
+    data(){
+        return {
+            logged: false
         }
-      })
-      .then((response)=>{
-        if(typeof response != 'undefined'){
-          this.$router.push('/home')
+    },
+    methods: {
+        sessionRedirect() {
+            console.log(this.logged)
+            this.$axios.defaults.headers.common = { "Authorization": `bearer ${String(sessionStorage.getItem("token_user"))}` };
+            this.$axios
+                .get(`${this.$HOST}/v1/users`)
+                .catch((error) => {
+                if (error) {
+                    this.$router.push("/login");
+                }
+                else {
+                    this.$router.push("/home");
+                }
+            })
+                .then((response) => {
+                if (typeof response != "undefined") {
+                    this.logged = true;
+                    this.$router.push("/home");
+                }
+            });
         }
-      })
+    },
+    mounted() {
+        this.sessionRedirect();
     }
-  },
-  mounted(){
-    this.sessionRedirect();
-  }
 }
 </script>
