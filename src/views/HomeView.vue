@@ -1,6 +1,6 @@
 <template>
   <InputSearch/>
-  <div class="spacing"><BoxClient/></div>
+  <BoxClient/>
 </template>
 
 <script>
@@ -20,7 +20,5 @@ export default {
 </script>
 
 <style>
-.spacing{
-  margin: 0px 10px;
-}
+
 </style>
