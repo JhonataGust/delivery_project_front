@@ -2,7 +2,7 @@
         <div class="bottom_navbar">
             <div class="nav-bar">
                 <div class="links">
-                    <router-link to="/profile">
+                    <router-link to="/">
                         <v-icon aria-hidden="false">
                             mdi-account
                         </v-icon>
@@ -12,12 +12,12 @@
                         mdi-food-steak
                     </v-icon>
                 </router-link>
-                <router-link to="/ok">
+                <router-link to="/">
                     <v-icon aria-hidden="false">
                         mdi-star
                     </v-icon>
                 </router-link>
-                <router-link  to="/ok">
+                <router-link  to="/">
                     <v-icon aria-hidden="false">
                         mdi-map-marker-star-outline
                     </v-icon>

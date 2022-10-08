@@ -7,6 +7,7 @@ import 'mosha-vue-toastify/dist/style.css'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 axios
+axios.defaults.headers.common = { "Authorization": `bearer ${String(sessionStorage.getItem("token_user"))}` };
 loadFonts()
 
 const app = createApp(App)

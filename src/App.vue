@@ -13,6 +13,9 @@
   :root {
     --color-one: white;
   }
+.clean_float{
+  clear: both;
+}  
 .fade__right {
     animation: fade_right 1s ease-in-out;
 }
@@ -36,7 +39,6 @@ export default {
     methods: {
         sessionRedirect() {
             console.log(this.logged)
-            this.$axios.defaults.headers.common = { "Authorization": `bearer ${String(sessionStorage.getItem("token_user"))}` };
             this.$axios
                 .get(`${this.$HOST}/v1/users`)
                 .catch((error) => {
@@ -49,14 +51,18 @@ export default {
             })
                 .then((response) => {
                 if (typeof response != "undefined") {
-                    this.logged = true;
-                    this.$router.push("/home");
+                  sessionStorage.setItem("is_logged",true);
+                  this.$router.push("/home");
                 }
             });
         }
     },
     mounted() {
-        this.sessionRedirect();
+        if(!sessionStorage.getItem("is_logged")){
+          this.sessionRedirect();
+        }else{
+          this.logged = true;
+        }
     }
 }
 </script>
