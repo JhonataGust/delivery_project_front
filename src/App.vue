@@ -7,6 +7,12 @@
   </v-app>
 </template>
 <style>
+  *{
+    font-family: 'Roboto', sans-serif !important;
+  }
+  :root {
+    --color-one: white;
+  }
 .fade__right {
     animation: fade_right 1s ease-in-out;
 }
