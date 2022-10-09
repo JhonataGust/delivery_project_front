@@ -38,31 +38,22 @@ export default {
     },
     methods: {
         sessionRedirect() {
-            console.log(this.logged)
+          if(!sessionStorage.getItem("is_logged")){
             this.$axios
                 .get(`${this.$HOST}/v1/users`)
-                .catch((error) => {
-                if (error) {
-                    this.$router.push("/login");
-                }
-                else {
-                    this.$router.push("/home");
-                }
-            })
                 .then((response) => {
                 if (typeof response != "undefined") {
                   sessionStorage.setItem("is_logged",true);
-                  this.$router.push("/home");
+                  this.$router.go();
                 }
             });
+          }else{
+          this.logged = true;
+          }
         }
     },
     mounted() {
-        if(!sessionStorage.getItem("is_logged")){
-          this.sessionRedirect();
-        }else{
-          this.logged = true;
-        }
+        this.sessionRedirect();
     }
 }
 </script>

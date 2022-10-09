@@ -146,6 +146,11 @@ components: {
         })
     }
    },
+   mounted(){
+    if(sessionStorage.getItem("is_logged")){
+        this.$router.push('/home');
+    }
+   }
 }
 
 </script>

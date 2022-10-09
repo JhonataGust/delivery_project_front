@@ -2,7 +2,7 @@
         <div class="bottom_navbar">
             <div class="nav-bar">
                 <div class="links">
-                    <router-link to="/">
+                    <router-link to="/profile">
                         <v-icon aria-hidden="false">
                             mdi-account
                         </v-icon>
