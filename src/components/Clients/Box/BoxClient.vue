@@ -1,26 +1,33 @@
 <template>
 
         <section class="spacing">
-            <div class="card-companies" v-for="n in 5" :key="n">
-                {{n}}
+            <div class="card-companies" v-for="client in clients" :key=client.id>
+                <v-icon 
+                v-if='!client.completed'
+                color="#E65F5C"
+                style="position: absolute;"
+                >
+                    mdi-account-clock-outline
+                </v-icon>
+                {{user}}
                 <div class="avatar">
                     <img
-                    src="https://logodownload.org/wp-content/uploads/2014/04/McDonalds-logo-1.png"
+                    :src="!client.logo ? require('@/assets/default_image.png') : client.logo"
                     />
                 </div>
                 <div class="clean_float"></div>
                 <div class="infos_clients">
-                    <h3 class="title">McDonald's</h3>
+                    <h3 class="title">{{client.company_name}}</h3>
                     <div class="details">
-                        <p class="open">Aberto <b>(12h ás 22h)</b></p>
-                        <v-rating
+                        <p class="close">Fechado <b>({{client.open}} ás {{client.close}})</b></p>
+                        <!-- <v-rating
                 :model-value="3.5"
                 color="amber"
                 dense
                 half-increments
                 readonly
                 size="20"
-                ></v-rating>
+                ></v-rating> -->
                     </div>
                 </div>
                 <div class="clean_float"></div>
@@ -75,10 +82,28 @@
 <script>
 export default {
     name:'BoxClient',
+    props: {
+        term_list: String
+    },
     data(){
         return{
-            n: 0
+            clients: []
         }
+    },
+    methods: {
+        getClients(){
+            let term = this.term_list 
+            this.$axios.get(`${this.$HOST}/v1/users/clients?term=` + term)
+            .catch(()=>{
+                console.log('Ops, was not possible to get the clients')
+            })
+            .then((response)=>{
+            this.clients = response.data.clients
+            })
+        }
+    },
+    mounted(){
+        this.getClients()
     }
 }
 </script>

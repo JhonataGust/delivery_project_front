@@ -12,10 +12,18 @@
   }
   :root {
     --color-one: white;
-  }
+  }  
 .clean_float{
   clear: both;
-}  
+} 
+.divider_title{
+  margin-top: 30px;
+} 
+.spacing{
+  padding: 10px 10px;
+  max-width: 500px;
+  margin: auto;
+}
 .fade__right {
     animation: fade_right 1s ease-in-out;
 }

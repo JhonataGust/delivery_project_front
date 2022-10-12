@@ -1,6 +1,16 @@
 <template>
-    <div class="input_main" v-for="input in inputs" :key="input.id">
-        <input :type="input.type" :placeholder="input.placeholder"/>
+    <div class="input_main" v-for="input in inputs" :key="input.type">
+        <div  class="fade__right">
+        <label>{{input.placeholder}}</label>
+        <input :type="input.type" 
+        required
+        :placeholder="input.placeholder" 
+        :value="input.value"
+        @change="getValue($event.target.value, input.name)" 
+        autocomplete="off"
+        :readonly="input.readonly == true ? true : false" 
+        />
+        </div>
     </div>
 </template>
 <script>
@@ -8,6 +18,18 @@ export default {
     name:'InputSimple',
     props: {
         inputs: Array
+    },
+    data(){
+        return {
+            input_values:{},
+
+        }
+    },
+    methods: {
+        getValue(value, input_name){
+            this.input_values[input_name] = value;
+            this.$emit('emit-payload-input', this.input_values)
+        }
     }
 }
 </script>
@@ -38,14 +60,8 @@ input:focus{
 ;
 }
 @media only screen and (max-width:800px) {
-    .header__div{
-        margin-top: 0px;
-        width: 100%;
-        padding:15px !important;
-    }¨
-    .form input {
+    input { 
     margin: unset;
-    padding:unset;
     padding-left: 20px;
     outline: none;
     }
