@@ -1,5 +1,14 @@
 <template>
   <div class="spacing">
+    <profile-box></profile-box>
+         <!---end-loader-->
+         <div class="divider_title">
+     <h4 style="color:#E65F5C">Lojas pendentes</h4>
+     <v-divider inset></v-divider>
+    </div>
+    <!---unconfirmed account_client-->
+     <box-client term_list="user"></box-client>
+     <!---end-unconfirmed account_client-->
     <!---init-header-edit-form-->
     <v-icon color="#E65F5C" @click="show_form = !show_form">{{
       show_form ? "mdi-minus-circle" : "mdi-plus-circle"
@@ -42,22 +51,15 @@
     <v-row justify="center" v-if="loader">
         <simple-loader></simple-loader>
     </v-row>
-     <!---end-loader-->
-     <div class="divider_title">
-     <h4 style="color:#E65F5C">Lojas pendentes</h4>
-     <v-divider inset></v-divider>
-    </div>
-    <!---unconfirmed account_client-->
-     <box-client term_list="user"></box-client>
-     <!---end-unconfirmed account_client-->
   </div>
 </template>
 <script>
 import InputSimple from "@/components/Form/Inputs/InputSimple.vue";
 import SimpleLoader from "@/components/Loader/SimpleLoader.vue";
 import BoxClient from "@/components/Clients/Box/BoxClient.vue";
+import ProfileBox from "@/components/Profile/ProfileBox.vue";
 export default {
-  components: { InputSimple, SimpleLoader, BoxClient },
+  components: { InputSimple, SimpleLoader, BoxClient, ProfileBox },
   name: "ProfileView",
   data() {
     return {
