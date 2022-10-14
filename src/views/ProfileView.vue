@@ -51,6 +51,7 @@
     <v-row justify="center" v-if="loader">
         <simple-loader></simple-loader>
     </v-row>
+    <div class="blank_merge"></div>
   </div>
 </template>
 <script>

@@ -19,6 +19,9 @@
 .divider_title{
   margin-top: 30px;
 } 
+.blank_merge{
+  margin-bottom:50px;
+}
 .spacing{
   padding: 10px 10px;
   max-width: 500px;
