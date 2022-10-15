@@ -1,49 +1,123 @@
 <template>
+   <v-toolbar class="nav-bar">
+            <v-spacer></v-spacer>
+            <section class="logo-img">
+                <img :src="require('../assets/Logomark.png')" alt="logo-img" @click="this.$router.go()">
+            </section>
+            <section class="nav-middle">
+                <a href="#">Entregador</a>
+                <a href="#">Burguer card</a>
+                 <a href="#">Carreiras</a>
+                <a href="#">Sobre</a>
+            </section>
+            <v-app-bar-nav-icon class="bar-custom"
+             variant="text"
+             @click.stop="drawer = !drawer"
+             style="position: absolute; left: 6em;"
+             ></v-app-bar-nav-icon>
+            <v-btn class="btn-top" @click="register = !register; hideForm = true;">
+                {{register == false ? 'Criar conta' : 'Entrar'}}
+            </v-btn>
+            <v-spacer></v-spacer>
+    </v-toolbar>
+    <section class="nav-middle-mobile fade__right" v-if="drawer">
+               <ul>
+                    <li><a href="#">Entregador</a></li>
+                    <li><a href="#">Burguer card</a></li>
+                    <li><a href="#">Carreiras</a></li>
+                    <li><a href="#">Sobre</a></li>
+               </ul>
+            </section>
     <div class="register__main">
-       <v-btn
-       style="width: 100%;color: #fff;"
-       color="#a34e4d"
-       @click="register = !register"
-       >
-        {{register == false ? 'Ainda não possui conta' : 'Já possui uma conta?'}}
-       </v-btn>
+      
        <StepForm @emit-params_register="register_account" page="5" v-if="register"/>
-       <LoginForm  v-if="!register" @emit-login_payload="save_login"/>
-       <div class="infos">
-        <h1 style="text-align:center;margin:20px 0px;">Quem somos</h1>
-        <div class="image">
-        <v-img
-        src="@/assets/florid-delivery.png"
-        >
-        </v-img>
-    </div>
-    <div class="info_text">
-        <h1>O melhor App de Delivery</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget fringilla lectus, 
-            lacinia tempor elit. Etiam vulputate, velit nec feugiat facilisis, neque elit consectetur dui,
-             at consectetur ex dui et diam. Donec ultrices tincidunt arcu at dapibus. Morbi at enim ut nunc 
-             feugiat placerat. In eleifend nunc odio, ut euismod augue blandit vel. Aliquam ac auctor mi. 
-             Maecenas efficitur, turpis nec sodales malesuada, arcu quam ultricies enim, sed pharetra odio urna quis felis.
-             acinia tempor elit. Etiam vulputate, velit nec feugiat facilisis, neque elit consectetur dui,
-             at consectetur ex dui et diam. Donec ultrices tincidunt arcu at dapibus. Morbi at enim ut nunc 
-             feugiat placerat. In eleifend nunc odio, ut euismod augue blandit vel. Aliquam ac auctor mi. 
-             Maecenas efficitur, turpis nec sodales malesuada, arcu quam ultricies enim, sed pharetra odio urna quis felis</p><br/>
-             <h1>Monitore os seus Pedidos</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget fringilla lectus, 
-            lacinia tempor elit. Etiam vulputate, velit nec feugiat facilisis, neque elit consectetur dui,
-             at consectetur ex dui et diam. Donec ultrices tincidunt arcu at dapibus. Morbi at enim ut nunc 
-             feugiat placerat. In eleifend nunc odio, ut euismod augue blandit vel. Aliquam ac auctor mi. 
-             Maecenas efficitur, turpis nec sodales malesuada, arcu quam ultricies enim, sed pharetra odio urna quis felis.</p>
-    </div>
-    </div>
+       <LoginForm  v-if="!register && hideForm" @emit-login_payload="save_login"/>
     </div>
 </template>
 
-<style>
-    .register__main{
-        background:#E65F5C;
-        height: 100% !important;
+<style scoped>
+    .nav-bar {
+        position: relative;
     }
+
+    .logo-img {
+        position: absolute;
+        left: 5%;
+        margin-top: 5px;
+    }
+    .logo-img > img {
+        width: 4em;
+        cursor: pointer;
+    }
+
+    .nav-middle {
+       position: absolute;
+       left: 13%;
+    }
+
+    .nav-middle-mobile {
+        display: flex;
+        position: absolute;
+        top: 9%;
+        max-width: 50%;
+        min-width: 25%;
+        background: #EEEEEE;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        box-shadow: 5px 7px 8px 2px rgba(0,0,0,0.1);
+
+    }
+    
+
+    .nav-middle-mobile a {
+        width: 100%;
+        padding: 20px;
+        text-decoration: none; 
+        
+        color: var(--color-prime);
+        font-size: 1em;
+    }
+
+    ul > li {
+        margin: 20px 0px;
+    }
+
+    .nav-middle-mobile a:hover {
+        opacity: 90%;
+        color: rgb(147, 147, 147);
+        transition-duration: .5s;
+    }
+
+    .nav-middle a{
+        margin: auto;
+        padding: 20px;
+        text-decoration: none;
+        color: var(--color-prime);    
+    }
+
+    .nav-middle a:hover {
+        opacity: 90%;
+        color: rgb(147, 147, 147);
+        transition-duration: .5s;
+    }
+
+    .btn-top {
+        position: absolute;
+        right: 5%;
+        border-radius: 10px;
+        background-color: var(--color-prime);
+        color: white;
+    }
+    .btn-top:hover {
+        transform: translateY(-1.5px);
+        transition-duration: .4s;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.455);
+    }
+
+    .btn-top:active {
+        opacity: 75%;
+    }
+
     .infos {
         color: aliceblue;
     }
@@ -62,8 +136,11 @@
         width: 60%;
         font-size: 18px;
     }
+    .bar-custom {
+        display: none;
+    }
 
-    @media only screen and (max-width:800px) {
+    @media only screen and (max-width:690px) {
         .infos .image{
         position: unset;
         width: 100%;
@@ -73,6 +150,14 @@
         padding: 50px;
         width: 100%;
     }
+    .nav-middle {
+        display: none;
+    }
+
+    .bar-custom {
+        display: block;
+    }
+   
     }
 </style>
 <script>
@@ -87,7 +172,9 @@ components: {
 },
     data(){
         return{
-            register: false
+            register: false,
+            hideForm: false,
+            drawer: false
         }
     },
     methods:{

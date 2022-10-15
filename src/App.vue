@@ -12,6 +12,7 @@
   }
   :root {
     --color-one: white;
+    --color-prime: #E65F5C;
   }  
 .clean_float{
   clear: both;
