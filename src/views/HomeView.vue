@@ -1,6 +1,6 @@
 <template>
-  <InputSearch/>
-  <BoxClient/>
+  <InputSearch @emit-query="make_param"/>
+  <BoxClient  :term_list="query_param"/>
 </template>
 
 <script>
@@ -14,6 +14,13 @@ export default {
 },
   data(){
     return {
+      param:'',
+      query_param: ''
+    }
+  },
+  methods: {
+    make_param(param){
+      this.query_param = String(param)
     }
   }
 }

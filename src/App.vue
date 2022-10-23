@@ -45,7 +45,8 @@ export default {
     components: { NavBar },
     data(){
         return {
-            logged: false
+            logged: false,
+            error: ''
         }
     },
     methods: {
@@ -53,6 +54,10 @@ export default {
           if(!sessionStorage.getItem("is_logged")){
             this.$axios
                 .get(`${this.$HOST}/v1/users`)
+                .catch((e)=>{
+                  this.error = e;
+                  this.$router.push('/');
+                })
                 .then((response) => {
                 if (typeof response != "undefined") {
                   sessionStorage.setItem("is_logged",true);

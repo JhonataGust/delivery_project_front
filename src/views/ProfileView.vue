@@ -1,14 +1,14 @@
 <template>
   <div class="spacing">
     <profile-box></profile-box>
-         <!---end-loader-->
-         <div class="divider_title">
-     <h4 style="color:#E65F5C">Lojas pendentes</h4>
-     <v-divider inset></v-divider>
+    <!---end-loader-->
+    <div class="divider_title">
+      <h4 style="color: #e65f5c">Lojas</h4>
+      <v-divider inset></v-divider>
     </div>
     <!---unconfirmed account_client-->
-     <box-client term_list="user"></box-client>
-     <!---end-unconfirmed account_client-->
+    <box-client term_list="user"></box-client>
+    <!---end-unconfirmed account_client-->
     <!---init-header-edit-form-->
     <v-icon color="#E65F5C" @click="show_form = !show_form">{{
       show_form ? "mdi-minus-circle" : "mdi-plus-circle"
@@ -47,9 +47,9 @@
       </p>
       <!---end-header-edit-form-->
     </div>
-     <!---init-loader-->
+    <!---init-loader-->
     <v-row justify="center" v-if="loader">
-        <simple-loader></simple-loader>
+      <simple-loader></simple-loader>
     </v-row>
     <div class="blank_merge"></div>
   </div>
@@ -135,7 +135,7 @@ export default {
       show_form: false,
       show_company: false,
       input_values: {},
-      loader: false
+      loader: false,
     };
   },
   methods: {
@@ -149,25 +149,28 @@ export default {
       this.input_values = values;
     },
     createClient() {
+      this.loader = true;
       if (this.validation(this.input_values)) {
-        this.$axios.post(`${this.$HOST}/v1/users/clients`,{
-            client: this.input_values
-        }).catch(() => {
-          this.$moshaToast("Ops, ocorreu um error", {
-            position: "top-center",
-            type: "danger",
-            timeout: 1500,
-          });
-        })
-        .then(()=>{
-          this.show_company = false;  
+        this.$axios
+          .post(`${this.$HOST}/v1/users/clients`, {
+            client: this.input_values,
+          })
+          .catch(() => {
+            this.$moshaToast("Ops, ocorreu um error", {
+              position: "top-center",
+              type: "danger",
+              timeout: 1500,
+            });
+          })
+          .then(() => {
+            this.show_company = false;
             this.$moshaToast("Loja criada com sucesso", {
-            position: "top-center",
-            type: "success",
-            timeout: 1500,
+              position: "top-center",
+              type: "success",
+              timeout: 1500,
+            });
+            this.loader = false;
           });
-          this.loader = true; 
-        })
       }
     },
     validation(values) {

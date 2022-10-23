@@ -1,6 +1,12 @@
 <template>
     <div class="form">
-        <input type="text" placeholder="Procure o que deseja" v-model="term"/>
+        <input type="text" placeholder="Procure o que deseja" v-model="search"/>
+        <v-btn
+        class="search_btn"
+        icon="mdi-magnify"
+        @click="searchTerm(`/${search}` ,null)"
+        >
+        </v-btn>
         <div class="filters_container">
             <div class="infos_filter">
                 <p>{{filter}}</p>
@@ -74,15 +80,14 @@
 
 .form input{
     margin: 12px 0px;
-    width: 100%;
+    width: 80%;
     padding: 8px 5px;
     padding-left: 20px;
     border: 1px solid #ccc;
     border-radius: 20px;
     display: inline-block;
     outline: none;
-}   
-
+}  
 .form input:focus{
     box-shadow:
   0px 0.1px 2.2px rgba(0, 0, 0, 0.02),
@@ -106,7 +111,7 @@ export default {
     name:'InputSearch',
     data(){
         return{
-            term:'',
+            search:'',
             items: [
                 { type:1,title: 'Mais Visualizados' },
                 { type:2,title: 'Mais Relevantes' },
