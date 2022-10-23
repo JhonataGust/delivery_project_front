@@ -11,10 +11,6 @@
         </div>
         <div class="user_infos">
           <h3>{{ client.company_name }}</h3>
-          <div class="divider_title">
-            <h4 style="color: #e65f5c">Endereços Adicionados</h4>
-            <v-divider inset></v-divider>
-          </div>
         </div>
                 <v-card>
           <v-tabs v-model="tab" style="color:#E65F5C">
