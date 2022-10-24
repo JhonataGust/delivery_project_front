@@ -1,5 +1,13 @@
 <template>
   <div class="main spacing" v-if="client">
+    <div class="add_product">
+      <v-btn
+      style="color:#E65F5C"
+      @click="dialog = true"
+      >
+        Add +
+      </v-btn>
+    </div>
     <div class="profile_main">
       <div class="profile">
         <div class="profile_img">
@@ -19,7 +27,6 @@
             <v-tab value="three">Promoções</v-tab>
             <v-tab value="three">Comentarios</v-tab>
           </v-tabs>
-
           <v-card-text>
             <v-window v-model="tab">
               <v-window-item value="one"><box-product></box-product></v-window-item>
@@ -33,14 +40,14 @@
       </div>
     </div>
   </div>
-  <error-message v-else></error-message>
+  <form-dialog v-if="dialog"></form-dialog>
 </template>
 
 <script>
 import BoxProduct from '@/components/Clients/Products/BoxProduct.vue';
-import ErrorMessage from '@/components/Errors/ErrorMessage.vue';
+import FormDialog from '@/components/Clients/Products/FormDialog.vue';
 export default {
-  components: { BoxProduct, ErrorMessage },
+  components: { BoxProduct, FormDialog },
   name: "ClientView",
   props: {
     uid: String,
@@ -49,6 +56,7 @@ export default {
     return {
       name: "ola",
       client: null,
+      dialog: false,
       tab: null,
     };
   },

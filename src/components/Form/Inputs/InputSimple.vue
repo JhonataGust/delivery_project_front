@@ -4,7 +4,6 @@
         <label>{{input.placeholder}}</label>
         <input :type="input.type" 
         required
-        :placeholder="input.placeholder" 
         :value="input.value"
         @change="getValue($event.target.value, input.name)" 
         autocomplete="off"
