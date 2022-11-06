@@ -4,6 +4,7 @@
       <v-btn
       style="color:#E65F5C"
       @click="dialog = true"
+      v-if="client.mine"
       >
         Add +
       </v-btn>
@@ -29,7 +30,7 @@
           </v-tabs>
           <v-card-text>
             <v-window v-model="tab">
-              <v-window-item value="one"><box-product></box-product></v-window-item>
+              <v-window-item value="one"><box-product :uid="uid"></box-product></v-window-item>
 
               <v-window-item value="two"> Two </v-window-item>
 
@@ -40,7 +41,7 @@
       </div>
     </div>
   </div>
-  <form-dialog v-if="dialog"></form-dialog>
+  <form-dialog v-if="dialog" :client_id="client.id"></form-dialog>
 </template>
 
 <script>

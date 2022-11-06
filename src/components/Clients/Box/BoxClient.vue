@@ -110,7 +110,7 @@ export default {
     return {
       clients: [],
       show_dialog_edit_client: false,
-      client_id: 1,
+      client_id: '',
       loader: false,
     };
   },

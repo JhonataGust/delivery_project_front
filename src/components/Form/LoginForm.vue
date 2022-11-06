@@ -102,9 +102,6 @@ border-radius: 15px;
 <script>
 export default {
     name: 'LoginForm',
-    setup(){
-        
-    },
     data(){
         return {
             email: '',

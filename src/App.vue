@@ -19,6 +19,7 @@
 } 
 .divider_title{
   margin-top: 30px;
+  margin: 10px;
 } 
 .blank_merge{
   margin-bottom:50px;
