@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import ClientView from '@/views/ClientView.vue'
+import CartView from '@/views/CartView.vue'
+
 const routes = [
   {
     path: '/home',
@@ -24,6 +26,11 @@ const routes = [
     name: 'client',
     component: ClientView,
     props: true
+  },
+  {
+    path: '/cart',
+    name:'cart',
+    component: CartView
   }
 ]
 

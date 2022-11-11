@@ -108,7 +108,7 @@
             >Valor Total: R${{total_value}}</v-card-text
           >
           <v-card-actions>
-            <v-btn color="#e65f5c" @click="reserve" text rounded class="mt-10">
+            <v-btn color="#e65f5c" @click="addToCart(product_show.id)" text rounded class="mt-10">
               <v-icon> mdi-cart-outline </v-icon>
               Adicionar ao Carrinho
             </v-btn>
@@ -142,7 +142,6 @@ export default {
       ok: "ok",
       products: {},
       loading: false,
-      reserve: "",
       product_show: {},
       extras: [],
       total_value: 0
@@ -183,6 +182,22 @@ export default {
         found = arr.indexOf(string);
       }
     },
+    addToCart(product_id){
+      this.$axios
+        .post(`${this.$HOST}/v1/users/user_carts`,{
+          user_cart: {
+            product_id: product_id,
+            extra_ids: this.extras
+          }
+        })
+        .then(() => {
+          this.$moshaToast("Produto Adicionado no carrinho!", {
+            position: "top-center",
+            type: "success",
+            timeout: 1500,
+          });
+        });
+    }
   },
   mounted() {
     this.getProducts();

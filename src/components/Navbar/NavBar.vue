@@ -14,15 +14,36 @@
         <router-link to="/">
           <v-icon aria-hidden="false"> mdi-map-marker-star-outline </v-icon>
         </router-link>
-        <v-icon color="grey lighten-1"> mdi-cart </v-icon>
+        <router-link to="/cart">
+          <v-badge :content="quantity_cart" color="error">
+              <v-icon>mdi-cart</v-icon>
+           </v-badge>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "NavBar",
+  data(){
+    return {
+      quantity_cart: []
+    }
+  },
+  methods: {
+    getCartAmount(){
+      this.$axios.get(`${this.$HOST}/v1/users/user_carts`)
+      .then((response)=> {
+        this.quantity_cart = response.data.user_carts.length
+      })
+    }
+  },
+  mounted() {
+    this.getCartAmount();
+  }
 };
 </script>
 
