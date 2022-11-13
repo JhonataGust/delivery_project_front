@@ -26,7 +26,7 @@
           {{ extra.name }}</v-chip
         >
         <h4>Total: R$ 20</h4>
-        <v-btn rounded icon="mdi-check-outline" color="green"></v-btn>
+        <v-btn rounded icon="mdi-check-outline" color="green" @click="acceptOrder(call_order.id)"></v-btn>
         <v-btn rounded icon="mdi-close-outline" color="red"></v-btn>
       </div>
     </div>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+
 export default {
   name: "CallOrder",
   data() {
@@ -49,17 +50,28 @@ export default {
           this.call_orders = response.data.order_calls;
           if (this.call_orders.length > 0) {
             var data = {
-              soundurl:
-                "http://soundbible.com/mp3/analog-watch-alarm_daniel-simion.mp3",
+              soundurl: require('@/assets/alarm.wav'),
             };
             var audio = new Audio(data.soundurl);
             audio.play();
           }
         });
     },
+    acceptOrder(id){
+        this.$axios.put(`${this.$HOST}/v1/users/order_relationships/accept/${id}`)
+        .then(()=>{
+            this.getCalls();
+        })
+    },
+    getCallsTimer(){
+        setInterval(()=>{
+            this.getCalls(); 
+        },30000)
+    }
   },
   mounted() {
     this.getCalls();
+    this.getCallsTimer();
   },
 };
 </script>

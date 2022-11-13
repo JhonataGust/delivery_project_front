@@ -53,6 +53,47 @@
                             >{{ order_relation.status_name }}</b
                           >
                         </h5>
+                        <v-timeline side="end" align="start">
+                    <v-timeline-item dot-color="pink" size="small" v-if="accepted_order.time">
+                      <div class="d-flex">
+                        <strong class="mr-4"></strong>
+                        <div>
+                          <strong>Entregue</strong>
+                          <div class="text-caption">O pedido foi entregue</div>
+                        </div>
+                      </div>
+                    </v-timeline-item>
+
+                    <v-timeline-item dot-color="green" size="small" v-if="accepted_order.time">
+                      <div class="d-flex">
+                        <strong class="mr-4"></strong>
+                        <div>
+                          <strong>Pedido Esta a Camminho</strong>
+                          <div class="text-caption">O pedido esta a caminho da sua residencia</div>
+                        </div>
+                      </div>
+                    </v-timeline-item>
+
+                    <v-timeline-item dot-color="yellow" size="small" v-if="accepted_order.time" >
+                      <div class="d-flex">
+                        <strong class="mr-4"></strong>
+                        <div>
+                          <strong>Pedido Pronto</strong>
+                          <div class="text-caption">O pedido já esta pronto mais ainda não foi enviado</div>
+                        </div>
+                      </div>
+                    </v-timeline-item>
+
+                    <v-timeline-item dot-color="teal-lighten-3" size="small">
+                      <div class="d-flex">
+                        <strong class="mr-4"></strong>
+                        <div>
+                          <strong>Pedido realizado</strong>
+                          <div class="text-caption">{{accepted_order.order_created_at}}</div>
+                        </div>
+                      </div>
+                    </v-timeline-item>
+                  </v-timeline>
                       </div>
                     </div>
                   </div>
