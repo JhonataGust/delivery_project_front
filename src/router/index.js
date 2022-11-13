@@ -4,6 +4,7 @@ import LoginView from '../views/LoginView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import ClientView from '@/views/ClientView.vue'
 import CartView from '@/views/CartView.vue'
+import ConfirmationView from '@/views/ConfirmationView.vue'
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/cart',
     name:'cart',
     component: CartView
+  },
+  {
+    path: '/confirmation',
+    name: 'confirmation',
+    component: ConfirmationView
   }
 ]
 

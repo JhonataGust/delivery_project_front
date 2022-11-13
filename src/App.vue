@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-main>
+      <CallOrder/>
       <router-view/>
       <NavBar v-if="logged"/>
     </v-main>
@@ -41,9 +42,10 @@
 </style>
 <script>
 import NavBar from './components/Navbar/NavBar.vue'
+import CallOrder from './components/Clients/Call/CallOrder.vue';
 export default {
     name: "App",
-    components: { NavBar },
+    components: { NavBar, CallOrder },
     data(){
         return {
             logged: false,

@@ -89,12 +89,6 @@ export default {
   max-width: 125px;
   margin: auto;
 }
-.address_infos {
-  padding: 20px;
-  width: 100%;
-  border: 1px solid #ccc;
-  margin: 10px 0px;
-}
 .paid {
   color: rgb(40, 176, 131);
 }
