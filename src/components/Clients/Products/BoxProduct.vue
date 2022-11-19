@@ -1,9 +1,9 @@
 <template>
-  <div class="main">
+  <div class="main" v-if="products.length > 0">
     <div class="products" v-for="product in products" :key="product.id">
       <div class="product_infos">
         <div class="product_image">
-          <v-img :src="product.image">
+          <v-img :src="product.image" min-height="50" max-height="50">
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
                 <v-progress-circular
@@ -15,27 +15,18 @@
           </v-img>
         </div>
         <div class="clear"></div>
-        <div class="infos">
-          <router-link to="/" style="color: unset; text-decoration: none">
-            <h3>{{ product.name }}</h3>
-            <div v-if="product.promotion != 0">
-              <h3 style="color: #e65f5c">Por: {{ product.promotion }}R$</h3>
-              <h4>
-                De: <del style="font-size: 16px">{{ product.value }}R$</del>
-              </h4>
-            </div>
-            <div v-else>
-              <h3 style="color: #e65f5c">Preço: {{ product.value }}R$</h3>
-            </div>
-          </router-link>
+        <div class="infos" @click="getProduct(product.id)">
+          <h3>{{ product.name }}</h3>
+          <div v-if="product.promotion != null">
+            <h3 style="color: #e65f5c">Por: {{ product.promotion }}R$</h3>
+            <h4>
+              De: <del style="font-size: 16px">{{ product.value }}R$</del>
+            </h4>
+          </div>
+          <div v-else>
+            <h3 style="color: #e65f5c">Preço: {{ product.value }}R$</h3>
+          </div>
         </div>
-        <v-icon
-          color="#e65f5c"
-          style="position: absolute; right: 25px; cursor: pointer"
-          @click="getProduct(product.id)"
-        >
-          mdi-information-outline
-        </v-icon>
         <div class="clear"></div>
       </div>
     </div>
@@ -57,7 +48,13 @@
           <v-card-item>
             <v-card-title>{{ product_show.product_type }}</v-card-title>
           </v-card-item>
-          <v-img height="250" :src="product_show.image" cover></v-img>
+          <v-img 
+          max-width="350"
+          min-width="350"
+          max-height="500"
+          cover
+          :src="product_show.image">
+          </v-img>
 
           <v-card-item>
             <v-card-title>{{ product_show.name }}</v-card-title>
@@ -66,7 +63,7 @@
           <v-card-text>
             <v-row align="center" class="mx-0">
               <v-rating
-                :model-value="4.5"
+                :model-value="product_show.rating"
                 color="amber"
                 dense
                 half-increments
@@ -74,7 +71,7 @@
                 size="14"
               ></v-rating>
 
-              <div class="text-grey ms-4">4.5 (413)</div>
+              <div class="text-grey ms-4 mt-3">{{product_show.rating}} ({{product_show.total_rating}})</div>
             </v-row>
 
             <div class="my-4 text-subtitle-1">Recomendamos esse Produto!</div>
@@ -86,7 +83,7 @@
 
           <v-divider class="mx-4 mb-1"></v-divider>
           <v-card-title>Extras</v-card-title>
-          <v-card-actions>
+          <v-card-actions style="display:unset;">
             <div
               class="extras_column"
               v-for="extra in product_show.extras"
@@ -103,12 +100,21 @@
               </div>
             </div>
           </v-card-actions>
-          <v-card-text v-if="extras.length == 0"><h4>Nenhum extra Adicionado</h4></v-card-text>
-          <v-card-text
-            >Valor Total: R${{total_value}}</v-card-text
+          <v-card-text v-if="extras.length == 0"
+            ><h4>Nenhum extra Adicionado</h4></v-card-text
           >
+          <v-card-text
+            >Valor Total: R${{ total_value }} <br />
+            <comments-box :product_id="product_show.id" :messages="product_show.messages"></comments-box>
+          </v-card-text>
           <v-card-actions>
-            <v-btn color="#e65f5c" @click="addToCart(product_show.id)" text rounded class="mt-10">
+            <v-btn
+              color="#e65f5c"
+              @click="addToCart(product_show.id)"
+              text
+              rounded
+              class="mt-10"
+            >
               <v-icon> mdi-cart-outline </v-icon>
               Adicionar ao Carrinho
             </v-btn>
@@ -126,12 +132,16 @@
     </div>
     <!-----End-OverLay-->
   </div>
+  <div v-else>
+    <h3 style="text-align:center">Essa Loja não possui produtos até ao momento</h3>
+  </div>
 </template>
 
 <script>
+import CommentsBox from "./CommentsBox.vue";
 import ListProducts from "./ListProducts.vue";
 export default {
-  components: { ListProducts },
+  components: { ListProducts, CommentsBox },
   name: "BoxProduct",
   props: {
     uid: String,
@@ -144,7 +154,7 @@ export default {
       loading: false,
       product_show: {},
       extras: [],
-      total_value: 0
+      total_value: 0,
     };
   },
   methods: {
@@ -159,10 +169,12 @@ export default {
       this.$axios
         .get(`${this.$HOST}/v1/users/clients/products/${product_id}`)
         .then((response) => {
-          this.product_show = response.data.product
-          this.total_value = response.data.product.promotion ? response.data.product.promotion : response.data.product.value
-          this.extras = []
-          this.dialog = true
+          this.product_show = response.data.product;
+          this.total_value = response.data.product.promotion
+            ? response.data.product.promotion
+            : response.data.product.value;
+          this.extras = [];
+          this.dialog = true;
         });
     },
     addExtras(extra_id, extra_value) {
@@ -172,7 +184,7 @@ export default {
         return false;
       }
       this.extras.push(extra_id);
-      this.total_value += extra_value
+      this.total_value += extra_value;
     },
     remove(arr, string) {
       var found = arr.indexOf(string);
@@ -182,22 +194,18 @@ export default {
         found = arr.indexOf(string);
       }
     },
-    addToCart(product_id){
+    addToCart(product_id) {
       this.$axios
-        .post(`${this.$HOST}/v1/users/user_carts`,{
+        .post(`${this.$HOST}/v1/users/user_carts`, {
           user_cart: {
             product_id: product_id,
-            extra_ids: this.extras
-          }
+            extra_ids: this.extras,
+          },
         })
         .then(() => {
-          this.$moshaToast("Produto Adicionado no carrinho!", {
-            position: "top-center",
-            type: "success",
-            timeout: 1500,
-          });
+          this.$router.go();
         });
-    }
+    },
   },
   mounted() {
     this.getProducts();
@@ -212,7 +220,11 @@ export default {
   width: 100%;
   margin-bottom: 12px;
 }
+.extras_column{
+  display: block;
+}
 .product_infos {
+  cursor: pointer;
   box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.3);
   display: flex;
   padding: 18px;
@@ -226,11 +238,14 @@ export default {
 }
 .product_infos .product_image img {
   width: 100%;
-  height: 100px;
 }
 .product_infos .infos {
   width: 60%;
-  margin-right: 10px;
+  margin-left: 15px;
+}
+
+.product_infos:hover {
+  background: rgb(247, 247, 247);
 }
 
 @media only screen and (max-width: 690px) {

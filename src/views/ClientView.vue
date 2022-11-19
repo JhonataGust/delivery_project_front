@@ -8,6 +8,14 @@
       >
         Add +
       </v-btn>
+
+      <router-link :to="`/client_manage/${uid}`" style="text-decoration:none">
+      <v-btn
+      style="color:#ccc"
+      >
+        Gerenciar Loja
+      </v-btn>
+    </router-link>
     </div>
     <div class="profile_main">
       <div class="profile">

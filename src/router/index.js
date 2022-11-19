@@ -5,7 +5,7 @@ import ProfileView from '../views/ProfileView.vue'
 import ClientView from '@/views/ClientView.vue'
 import CartView from '@/views/CartView.vue'
 import ConfirmationView from '@/views/ConfirmationView.vue'
-
+import ClientManageView from '@/views/ClientManageView.vue'
 const routes = [
   {
     path: '/home',
@@ -37,6 +37,12 @@ const routes = [
     path: '/confirmation',
     name: 'confirmation',
     component: ConfirmationView
+  },
+  {
+    path: '/client_manage/:uid',
+    name: 'client_manage',
+    component: ClientManageView,
+    props: true
   }
 ]
 

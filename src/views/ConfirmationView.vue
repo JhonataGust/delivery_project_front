@@ -54,7 +54,7 @@
                           >
                         </h5>
                         <v-timeline side="end" align="start">
-                    <v-timeline-item dot-color="pink" size="small" v-if="accepted_order.time">
+                    <v-timeline-item dot-color="pink" size="small" v-if="order_relation.status == 4">
                       <div class="d-flex">
                         <strong class="mr-4"></strong>
                         <div>
@@ -64,7 +64,7 @@
                       </div>
                     </v-timeline-item>
 
-                    <v-timeline-item dot-color="green" size="small" v-if="accepted_order.time">
+                    <v-timeline-item dot-color="green" size="small" v-if="order_relation.status >= 3">
                       <div class="d-flex">
                         <strong class="mr-4"></strong>
                         <div>
@@ -74,7 +74,7 @@
                       </div>
                     </v-timeline-item>
 
-                    <v-timeline-item dot-color="yellow" size="small" v-if="accepted_order.time" >
+                    <v-timeline-item dot-color="yellow" size="small" v-if="order_relation.status >= 2" >
                       <div class="d-flex">
                         <strong class="mr-4"></strong>
                         <div>

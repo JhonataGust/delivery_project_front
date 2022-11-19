@@ -177,7 +177,15 @@ export default {
 
       let payload = { ...input_value, ...client_id, ...product_type };
 
-      console.log(payload);
+      if (this.imgSrc == ""){
+        this.$moshaToast("Coloque uma Foto do seu Produto", {
+            position: "top-center",
+            type: "warning",
+            timeout: 1500,
+          });
+          return
+      }
+
       this.$axios
         .post(`${this.$HOST}/v1/users/clients/products`, {
           product: payload,

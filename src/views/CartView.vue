@@ -20,7 +20,7 @@
                   : product.product_value
               }}
             </h4>
-            <div class="extras" v-if="product.extras.length > 0">
+            <div class="extras" v-if="product.extra_ids.length > 0">
               <h4>Adicionais:</h4>
               <v-chip
                 v-for="extra in product.extras"
