@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style="background-color: #293542">
     <v-main>
       <CallOrder/>
       <router-view/>

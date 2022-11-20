@@ -20,6 +20,7 @@
 </v-row>
 </template>
 <style scoped>
+
 .header__div{
     margin-top: 150px;
     width: 30%;
