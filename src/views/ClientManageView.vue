@@ -31,7 +31,7 @@
         </v-list>
       </v-navigation-drawer>
 
-      <v-main style="height: 100vh">
+      <v-main  style="height: 100vh">
       <TableProduct :list_approved="list_approved" :client_uid="uid" :type="type_list" v-if="type_list != 0"></TableProduct>  
       </v-main>
     </v-layout>

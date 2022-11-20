@@ -1,4 +1,4 @@
-<template>    
+<template>
     <v-row justify="center" class="mx-auto">
 <div class="header__div fade__right">
     <div class="pernosal_infos">
@@ -20,7 +20,6 @@
 </v-row>
 </template>
 <style scoped>
-
 .header__div{
     margin-top: 150px;
     width: 30%;
