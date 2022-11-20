@@ -33,6 +33,37 @@
        <StepForm @emit-params_register="register_account" page="5" v-if="register"/>
        <LoginForm  v-if="!register && hideForm" @emit-login_payload="save_login"/>
     </div>
+    <v-carousel
+    class="vsheet"
+    v-if="hideForm==false"
+    height="100vh"
+    background-attachment="fixed"
+    hide-delimiters
+    progress="primary"
+  >
+    <v-carousel-item
+        class="vsheet"
+      v-for="(slide, i) in slides"
+      :key="i"
+    >
+      <v-sheet
+       class="vsheet"
+        height="100%"
+      >
+        <div class="d-flex fill-height justify-center align-center">
+            <v-img
+            class="img-opacity"
+            :src="slide"
+            center
+            cover>
+                <h3>
+                    {{phrases[i]}}
+                </h3>
+            </v-img>
+        </div>
+      </v-sheet>
+    </v-carousel-item>
+  </v-carousel>
 </template>
 
 <style scoped>
@@ -140,6 +171,20 @@
         display: none;
     }
 
+    .img-opacity { 
+        opacity: 90%;
+    }
+     
+    h3 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font: bold 4em 'Arial';
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.581);
+        color: white;
+    }
+
     @media only screen and (max-width:690px) {
         .infos .image{
         position: unset;
@@ -159,6 +204,58 @@
     }
    
     }
+
+
+    .vsheet {
+        background-attachment: fixed;
+    }
+
+    @media only screen and (max-width:1280px) {
+        .img-opacity {
+            height: 100vh;
+            background-size: cover;
+
+        }
+
+        h3 {
+            font: bold 3em 'Arial';
+        }
+    }
+
+    @media only screen and (max-width:965px) {
+        .img-opacity {
+            height: 100vh;
+            background-size: cover;
+    
+        }
+
+        h3 {
+            font: bold 2.5em 'Arial';
+        }
+    }
+
+    @media only screen and (max-width:805px) {
+        .img-opacity {
+            height: 100vh;
+            background-size: cover;
+        }
+
+        h3 {
+            font: bold 2em 'Arial';
+        }
+    }
+
+    
+    @media only screen and (max-width:700px) {
+        .img-opacity {
+            height: 100vh;
+            background-size: cover;
+        }
+
+        h3 {
+            font: bold 1.5em 'Arial';
+        }
+    }
 </style>
 <script>
 import StepForm from '@/components/Form/StepForm.vue';
@@ -174,7 +271,17 @@ components: {
         return{
             register: false,
             hideForm: false,
-            drawer: false
+            drawer: false,
+            slides: [
+                "https://images.pexels.com/photos/3738755/pexels-photo-3738755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                "https://images.pexels.com/photos/13457624/pexels-photo-13457624.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                "https://images.pexels.com/photos/4869423/pexels-photo-4869423.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            ],
+            phrases: [
+                "The best food delivery",
+                "The best in the world",
+                "The best cook"
+            ]
         }
     },
     methods:{
