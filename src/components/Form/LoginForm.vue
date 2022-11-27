@@ -1,4 +1,4 @@
-<template>    
+<template>
     <v-row justify="center" class="mx-auto">
 <div class="header__div fade__right">
     <div class="pernosal_infos">

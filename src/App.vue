@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main>
+    <v-main style="background-color: #293542;">
       <CallOrder/>
       <router-view/>
       <NavBar v-if="logged"/>

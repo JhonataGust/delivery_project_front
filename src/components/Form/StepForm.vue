@@ -1,5 +1,5 @@
 <template>    
-    <v-row justify="center" class="mx-auto" style="background:#E65F5C">
+    <v-row justify="center" class="mx-auto" style="background-color: #293542;">
 <div class="header__div fade__right" v-if="step == 1">
     <div class="pernosal_infos">
     <div class="title">
