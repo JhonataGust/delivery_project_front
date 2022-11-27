@@ -4,12 +4,11 @@
       <v-navigation-drawer expand-on-hover rail>
         <v-list>
           <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-            title="Sandra Adams"
-            :subtitle="uid"
+            :prepend-avatar="client.logo"
+            :title="client.name"
+            :subtitle="client.open ? 'Aberto' : 'Fechado'"
           ></v-list-item>
         </v-list>
-
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
@@ -25,14 +24,13 @@
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-star"
-            title="Starred"
-            value="starred"
+            title="Entregas a Caminho"
+            @click="type_list = 3"
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>
-
       <v-main style="height: 100vh">
-      <TableProduct :list_approved="list_approved" :client_uid="uid" :type="type_list" v-if="type_list != 0"></TableProduct>  
+      <TableProduct :list_approved="list_approved" :client_uid="uid" :type_list="type_list" v-if="type_list != 0"></TableProduct>  
       </v-main>
     </v-layout>
   </v-card>
@@ -50,7 +48,8 @@ export default {
         return {
             list_approved: [],
             type: false,
-            type_list: 0
+            type_list: 0,
+            client: {}
         };
     },
     methods: {
@@ -62,6 +61,7 @@ export default {
                 })
                 .then((response) => {
                 this.list_approved = response.data.orders;
+                this.client = response.data.client
             });
         },
     },

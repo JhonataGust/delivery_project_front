@@ -35,10 +35,20 @@
                         <h4>{{ order_relation.product_name }}</h4>
                         <h5>Informações:</h5>
                         <h5>
+                          Pedido: #{{order_relation.id}}
+                        </h5>
+                        <h5>
                           Total:
                           <b style="color: rgb(40, 176, 131)"
                             >R$ {{ order_relation.value }}</b
                           >
+                        </h5>
+                        <h5>
+                          Pedidos na frente: {{order_relation.amount_orders}}
+                        </h5>
+                        <h5>
+                          Estimava: 
+                          {{getEstimative(order_relation.amount_orders, order_relation.amount_extras, order_relation.status)}}
                         </h5>
                         <h5>
                           Metodo de pagamento:
@@ -203,6 +213,12 @@ export default {
     },
     setOrder() {
       this.interval = setInterval(this.getOrders, 15000);
+    },
+    getEstimative(products_front, extras, status){
+      let estimative = products_front * 18 + extras
+      if(status == 1) return estimative + 5 + " Minutos"
+      if(status == 2) return estimative + " Minutos"
+      if(status == 3) return 'Quase lá!'
     },
     clearIntervalTimer() {
       clearInterval(this.interval);
